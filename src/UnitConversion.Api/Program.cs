@@ -66,17 +66,24 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-        foreach (var description in provider.ApiVersionDescriptions)
+        var descriptions = app.DescribeApiVersions();
+        foreach (var description in descriptions)
         {
             options.SwaggerEndpoint(
                 $"/swagger/{description.GroupName}/swagger.json",
                 $"Unit Conversion API {description.GroupName.ToUpperInvariant()}");
         }
+        options.RoutePrefix = "swagger";
     });
+
+    // Conveniently redirect root / to /swagger in development
+    app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.MapHealthChecks("/health");
 
