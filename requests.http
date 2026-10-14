@@ -1,0 +1,156 @@
+@baseUrl = http://localhost:5000
+
+### 1. Health Check
+GET {{baseUrl}}/health
+Accept: text/plain
+
+###
+
+### 2. List All Categories
+GET {{baseUrl}}/api/v1/categories
+Accept: application/json
+
+###
+
+### 3. List Units for Length Category
+GET {{baseUrl}}/api/v1/categories/length/units
+Accept: application/json
+
+###
+
+### 4. List Units for Temperature Category
+GET {{baseUrl}}/api/v1/categories/temperature/units
+Accept: application/json
+
+###
+
+### 5. List Units for Weight / Mass Category
+GET {{baseUrl}}/api/v1/categories/weight/units
+Accept: application/json
+
+###
+
+### 6. Convert Length: Meter to Foot (Functional Requirement Example)
+POST {{baseUrl}}/api/v1/conversions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "category": "length",
+  "fromUnit": "meter",
+  "toUnit": "foot",
+  "value": 10
+}
+
+###
+
+### 7. Convert Length Using Symbols (Case-Insensitive)
+POST {{baseUrl}}/api/v1/conversions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "category": "length",
+  "fromUnit": "m",
+  "toUnit": "ft",
+  "value": 10
+}
+
+###
+
+### 8. Convert Temperature: Celsius to Fahrenheit
+POST {{baseUrl}}/api/v1/conversions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "category": "temperature",
+  "fromUnit": "celsius",
+  "toUnit": "fahrenheit",
+  "value": 100
+}
+
+###
+
+### 9. Convert Temperature: Absolute Zero (0 Kelvin to Celsius)
+POST {{baseUrl}}/api/v1/conversions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "category": "temperature",
+  "fromUnit": "kelvin",
+  "toUnit": "celsius",
+  "value": 0
+}
+
+###
+
+### 10. Convert Weight: Kilogram to Pound
+POST {{baseUrl}}/api/v1/conversions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "category": "weight",
+  "fromUnit": "kilogram",
+  "toUnit": "pound",
+  "value": 10
+}
+
+###
+
+### 11. Custom Precision Rounding (2 decimal places)
+POST {{baseUrl}}/api/v1/conversions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "category": "length",
+  "fromUnit": "meter",
+  "toUnit": "foot",
+  "value": 10,
+  "precision": 2
+}
+
+###
+
+### 12. Error: Unknown Category (Expects 404 ProblemDetails)
+POST {{baseUrl}}/api/v1/conversions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "category": "speed",
+  "fromUnit": "mph",
+  "toUnit": "kph",
+  "value": 65
+}
+
+###
+
+### 13. Error: Unknown Unit in Category (Expects 400 ProblemDetails)
+POST {{baseUrl}}/api/v1/conversions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "category": "length",
+  "fromUnit": "celsius",
+  "toUnit": "meter",
+  "value": 10
+}
+
+###
+
+### 14. Error: Value Below Absolute Zero (Expects 400 ProblemDetails)
+POST {{baseUrl}}/api/v1/conversions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "category": "temperature",
+  "fromUnit": "celsius",
+  "toUnit": "kelvin",
+  "value": -300
+}

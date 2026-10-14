@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/UnitConversion.Api/UnitConversion.Api.csproj" />
+    <Project Path="src/UnitConversion.Application/UnitConversion.Application.csproj" />
+    <Project Path="src/UnitConversion.Domain/UnitConversion.Domain.csproj" />
+    <Project Path="src/UnitConversion.Infrastructure/UnitConversion.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/UnitConversion.Tests.Integration/UnitConversion.Tests.Integration.csproj" />
+    <Project Path="tests/UnitConversion.Tests.Unit/UnitConversion.Tests.Unit.csproj" />
+  </Folder>
+</Solution>

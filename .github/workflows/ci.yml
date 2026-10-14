@@ -1,0 +1,30 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        global-json-file: global.json
+
+    - name: Restore Dependencies
+      run: dotnet restore UnitConversion.sln
+
+    - name: Build Solution
+      run: dotnet build UnitConversion.sln --no-restore --configuration Release
+
+    - name: Run Tests
+      run: dotnet test UnitConversion.sln --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage"
